@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
 from typing import List # To support Python>3.5
-import typer
+import argparse
 import invisible_backdoor_detector.helper as helper
-
-app = typer.Typer(add_completion=False, context_settings={"help_option_names": ["-h", "--help"]})
 
 # Definition of Bidi Characters array
 bidi_characters = ["\u115f","\u1160","\u3164","\uffa0"] #Fillers
@@ -41,12 +39,19 @@ def remove_bidi(textfiles: List[str]):
                         output.write(clean_filebytes)
     helper.success("Bidi characters removed.")
 
-@app.command()
-def detect(path: str = typer.Argument(..., help="Path of the folder to check"), remove: bool = typer.Option(False, "--remove", "-r", help="Remove the Bidi characters found")):
+def main():
+    parser = argparse.ArgumentParser(
+        prog='python -m invisible_backdoor_detector',
+        description='Detect and optionally remove Bidi characters in text files'
+    )
+    parser.add_argument('path', type=str, help='Path of the folder to check')
+    parser.add_argument('--remove', '-r', action='store_true', help='Remove the Bidi characters found')
+    args = parser.parse_args()
+
     helper.banner()
-    helper.check_dir(path)
-    textfiles = helper.get_utf8_files(path)
-    spot_bidi(textfiles, remove)
+    helper.check_dir(args.path)
+    textfiles = helper.get_utf8_files(args.path)
+    spot_bidi(textfiles, args.remove)
 
 if __name__ == "__main__":
-    app()
+    main()

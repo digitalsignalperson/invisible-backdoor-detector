@@ -1,3 +1,11 @@
+#### Run this tool without any dependencies
+
+```
+git clone https://github.com/digitalsignalperson/invisible-backdoor-detector.git
+cd invisible-backdoor-detector
+python -m invisible-backdoor-detector example
+```
+
 # Invisible Backdoor Detector
 <p align="center">
   <img id="header" src="https://raw.githubusercontent.com/cybersecsi/invisible-backdoor-detector/main/docs/logo.png" />
